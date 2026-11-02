@@ -9,7 +9,7 @@ namespace retail_POS
         private int id;
         private string saledate;
         private decimal taxamount;
-        private int grandtotal;
+        private decimal grandtotal;
 
         public int ID
         {
@@ -26,7 +26,7 @@ namespace retail_POS
             get { return taxamount; }
             set { taxamount = value; }
         }
-        public int GrandTotal
+        public decimal GrandTotal
         {
             get { return grandtotal; }
             set { grandtotal = value; }
@@ -34,7 +34,7 @@ namespace retail_POS
 
         public Transaction() { /* base constructor */ }
 
-        public Transaction(int i, string sd, decimal ta, int gt)
+        public Transaction(int i, string sd, decimal ta, decimal gt)
         {
             id = i;
             saledate = sd;
