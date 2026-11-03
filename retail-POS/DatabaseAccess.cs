@@ -13,7 +13,7 @@ namespace retail_POS {
             InitializeDatabase();
         }
 
-        public void InitializeDatabase() {
+        public virtual void InitializeDatabase() {
             try {
                 using (var connection = new SqliteConnection(ConnectionString)) {
                     connection.Open();
