@@ -10,13 +10,17 @@ namespace retail_POS {
         private const string ConnectionString = "Data Source=UserData.db";
         private const string SaltStr = "P3pp#r";
 
+        public UserDatabaseAccess() {
+            InitializeDatabase();
+        }
+
         public override void InitializeDatabase() {
             try {
                 using (var connection = new SqliteConnection(ConnectionString)) {
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandText = (" CREATE TABLE IF NOT EXISTS Administrators(ID INTEGER PRIMARY KEY, Username STRING NOT NULL, Password STRING NOT NULL)");
+                    command.CommandText = (" CREATE TABLE IF NOT EXISTS Administrators(ID INTEGER PRIMARY KEY, Username STRING UNIQUE NOT NULL, Password STRING NOT NULL)");
                     command.ExecuteNonQuery();
                 }
             }
@@ -33,6 +37,69 @@ namespace retail_POS {
             byte[] hashValue = hash.ComputeHash(pwordAndSalt);
 
             return ( BitConverter.ToString(hashValue) );
+        }
+
+
+        public void CreateUser(string uname, string pword) {
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" INSERT INTO Administrators (Username,Password) Values ('" + uname + "', '" + Salt(pword) + "') ");
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Error creating new user.\t" + ex.Message);
+            }
+        }
+        public bool LogIn(string uname, string pword) {
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" SELECT Password FROM Administrators WHERE Username = '" + uname + "'");
+
+                    string storedPword;
+
+                    using (var reader = command.ExecuteReader()) {
+                        storedPword = reader.GetString(0);
+                    }
+
+                    if ( storedPword == Salt(pword) ) {
+                        return true; // password is correct
+                    }
+                    else {
+                        MessageBox.Show("Incorrect password.");
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Failed to log in.\t" + ex.Message);
+            }
+            
+            return false;
+        }
+        public string GetSaltedPassword(string uname) { // THIS IS FOR TESTING, I AM GOING TO DELETE IT LATER
+            string salty = "";
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" SELECT Password FROM Administrators WHERE Username = '" + uname + "'");
+
+                    using (var reader = command.ExecuteReader()) {
+                        salty = reader.GetString(0);
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("fuck.\t" + ex.Message);
+            }
+            return salty;
         }
 
     }

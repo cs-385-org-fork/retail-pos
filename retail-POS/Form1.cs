@@ -7,6 +7,8 @@ namespace retail_POS {
         public Form1()
         {
             InitializeComponent();
+
+            // (new AdminLogin()).Show();
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
