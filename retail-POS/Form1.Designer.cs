@@ -25,11 +25,11 @@
         private void InitializeComponent()
         {
             btnAddItem = new Button();
-            listBox1 = new ListBox();
-            listBox2 = new ListBox();
-            textBox1 = new TextBox();
+            lbxCheckoutItems = new ListBox();
+            tbxBarcode = new TextBox();
             btnCancelTransaction = new Button();
             btnFinishTransaction = new Button();
+            lbxAllProducts = new ListBox();
             SuspendLayout();
             // 
             // btnAddItem
@@ -42,28 +42,20 @@
             btnAddItem.UseVisualStyleBackColor = true;
             btnAddItem.Click += btnAddItem_Click;
             // 
-            // listBox1
+            // lbxCheckoutItems
             // 
-            listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(548, 44);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(240, 284);
-            listBox1.TabIndex = 1;
+            lbxCheckoutItems.FormattingEnabled = true;
+            lbxCheckoutItems.Location = new Point(12, 12);
+            lbxCheckoutItems.Name = "lbxCheckoutItems";
+            lbxCheckoutItems.Size = new Size(530, 364);
+            lbxCheckoutItems.TabIndex = 2;
             // 
-            // listBox2
+            // tbxBarcode
             // 
-            listBox2.FormattingEnabled = true;
-            listBox2.Location = new Point(12, 12);
-            listBox2.Name = "listBox2";
-            listBox2.Size = new Size(530, 364);
-            listBox2.TabIndex = 2;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(548, 12);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(240, 27);
-            textBox1.TabIndex = 3;
+            tbxBarcode.Location = new Point(548, 12);
+            tbxBarcode.Name = "tbxBarcode";
+            tbxBarcode.Size = new Size(240, 27);
+            tbxBarcode.TabIndex = 3;
             // 
             // btnCancelTransaction
             // 
@@ -83,16 +75,24 @@
             btnFinishTransaction.Text = "Finish Transaction";
             btnFinishTransaction.UseVisualStyleBackColor = true;
             // 
+            // lbxAllProducts
+            // 
+            lbxAllProducts.FormattingEnabled = true;
+            lbxAllProducts.Location = new Point(548, 45);
+            lbxAllProducts.Name = "lbxAllProducts";
+            lbxAllProducts.Size = new Size(240, 284);
+            lbxAllProducts.TabIndex = 6;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lbxAllProducts);
             Controls.Add(btnFinishTransaction);
             Controls.Add(btnCancelTransaction);
-            Controls.Add(textBox1);
-            Controls.Add(listBox2);
-            Controls.Add(listBox1);
+            Controls.Add(tbxBarcode);
+            Controls.Add(lbxCheckoutItems);
             Controls.Add(btnAddItem);
             Name = "Form1";
             Text = "Form1";
@@ -104,9 +104,10 @@
 
         private Button btnAddItem;
         private ListBox listBox1;
-        private ListBox listBox2;
-        private TextBox textBox1;
+        private ListBox lbxCheckoutItems;
+        private TextBox tbxBarcode;
         private Button btnCancelTransaction;
         private Button btnFinishTransaction;
+        private ListBox lbxAllProducts;
     }
 }
