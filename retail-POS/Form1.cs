@@ -5,7 +5,7 @@ namespace retail_POS {
     {
         List<Product> availableProduct = new List<Product> { };
         List<Product> currentTransactionProducts = new List<Product> { };
-        DatabaseAccess DatabaseAccessor;
+        
 
         public void initializeLists()
         {
@@ -16,7 +16,6 @@ namespace retail_POS {
         public Form1()
         {
             InitializeComponent();
-            DatabaseAccessor.InitializeDatabase();
             initializeLists();
             //(new AdminLogin()).Show();
         }
@@ -60,7 +59,8 @@ namespace retail_POS {
                 {
                     if (lbxAllProducts.SelectedIndex != -1)
                     {
-                        currentTransactionProducts.Add((Product)listBox1.SelectedItem);
+                        currentTransactionProducts.Add((Product)lbxAllProducts.SelectedItem);
+                        lbxCheckoutItems.Items.Add(lbxAllProducts.SelectedItem);
                     }
                 }
 
@@ -79,8 +79,11 @@ namespace retail_POS {
 
             if (lbxCheckoutItems.Items.Count != 0)
             {
-
-            }
+                foreach (Product item in currentTransactionProducts)
+                { 
+                    
+                }
+                }
             else
             {
                 MessageBox.Show("There are no items in the list.");
