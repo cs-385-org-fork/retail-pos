@@ -65,6 +65,7 @@
             btnCancelTransaction.TabIndex = 4;
             btnCancelTransaction.Text = "Cancel Transaction";
             btnCancelTransaction.UseVisualStyleBackColor = true;
+            btnCancelTransaction.Click += btnCancelTransaction_Click;
             // 
             // btnFinishTransaction
             // 
@@ -74,6 +75,7 @@
             btnFinishTransaction.TabIndex = 5;
             btnFinishTransaction.Text = "Finish Transaction";
             btnFinishTransaction.UseVisualStyleBackColor = true;
+            btnFinishTransaction.Click += btnFinishTransaction_Click;
             // 
             // lbxAllProducts
             // 
