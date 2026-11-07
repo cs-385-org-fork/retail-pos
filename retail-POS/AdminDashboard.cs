@@ -14,13 +14,21 @@ namespace retail_POS
         public AdminDashboard()
         {
             InitializeComponent();
+            LoadInventory();
         }
 
         private void lBxInventory_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (lBxInventory.SelectedItem is Product product)
+            {
+                lblInStockValue.Text = product.Quantity.ToString();
+                lblPriceValue.Text = product.Price.ToString("0.00");
+            }
         }
-
+        private void AdminDashboard_Load(object sender, EventArgs e)
+        {
+            LoadInventory();
+        }
         private void tBxAddProduct_TextChanged(object sender, EventArgs e)
         {
 
@@ -28,19 +36,40 @@ namespace retail_POS
 
         private void btnRemoveFromInventory_Click(object sender, EventArgs e)
         {
-            dbAccess.RemoveProduct(lBxInventory.SelectedIndex + 1);
+            if (lBxInventory.SelectedItem is Product product)
+            {
+                dbAccess.RemoveProduct(product.ID);
+                LoadInventory();
+            }
         }
 
+        private void LoadInventory()
+        {
+            lBxInventory.DataSource = null;
+            lBxInventory.DataSource = dbAccess.ListProducts();
+            lBxInventory.DisplayMember = nameof(Product.Name);
+            lBxInventory.ValueMember = nameof(Product.ID);
+        }
         private void btnAddToInventory_Click(object sender, EventArgs e)
         {
-            dbAccess.AddProduct(tBxAddProduct.Text, 0, 0);
+            if (!string.IsNullOrWhiteSpace(tBxAddProduct.Text))
+            {
+                dbAccess.AddProduct(tBxAddProduct.Text.Trim(), 0, 0);
+                tBxAddProduct.Clear();
+                LoadInventory();
+            }
         }
 
         private void tbxChangeInStock_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                dbAccess.UpdateProductStock(lBxInventory.SelectedIndex + 1, Convert.ToInt32(tbxChangeInStock.Text));
+                if (lBxInventory.SelectedItem is Product product &&
+                    int.TryParse(tbxChangeInStock.Text, out int quantity))
+                {
+                    dbAccess.UpdateProductStock(product.ID, quantity);
+                    LoadInventory();
+                }
             }
         }
 
@@ -48,7 +77,12 @@ namespace retail_POS
         {
             if (e.KeyCode == Keys.Enter)
             {
-                dbAccess.UpdateProductPrice(lBxInventory.SelectedIndex + 1, Convert.ToDecimal(tbxChangePrice.Text));
+                if (lBxInventory.SelectedItem is Product product &&
+                    decimal.TryParse(tbxChangePrice.Text, out decimal price))
+                {
+                    dbAccess.UpdateProductPrice(product.ID, price);
+                    LoadInventory();
+                }
             }
         }
     }

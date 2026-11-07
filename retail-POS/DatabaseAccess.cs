@@ -8,6 +8,7 @@ namespace retail_POS {
     internal class DatabaseAccess {
 
         private const string ConnectionString = "Data Source=ShopData.db";
+        private string? connnectionString;
 
         public DatabaseAccess() {
             InitializeDatabase();
@@ -19,7 +20,7 @@ namespace retail_POS {
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandText = (" CREATE TABLE IF NOT EXISTS Products(ID INTEGER PRIMARY KEY, Name STRING NOT NULL, Price NOT NULL, Quantity NOT NULL)");
+                    command.CommandText = (" CREATE TABLE IF NOT EXISTS Products(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name STRING NOT NULL, Price NOT NULL, Quantity NOT NULL)");
                     command.ExecuteNonQuery();
 
                     command.CommandText = (" CREATE TABLE IF NOT EXISTS Transactions(ID INTEGER PRIMARY KEY, SaleDate STRING NOT NULL, TaxAmount DOUBLE, GrandTotal DOUBLE NOT NULL)");
@@ -45,6 +46,7 @@ namespace retail_POS {
                     var command = connection.CreateCommand();
                     command.CommandText = (@" INSERT INTO Products(Name, Price, Quantity) 
                                                                 VALUES(@name, @price, @quantity); ");
+                    //command.Parameters.AddWithValue("@id", id);
                     command.Parameters.AddWithValue("@name", name);
                     command.Parameters.AddWithValue("@price", price);
                     command.Parameters.AddWithValue("@quantity", quantity);
@@ -62,8 +64,10 @@ namespace retail_POS {
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandText = (@" INSERT INTO Products(Name, Price, Quantity) 
+                    //command.CommandText = (@"")
+                    command.CommandText = (@" INSERT INTO Products( Name, Price, Quantity) 
                                                                 VALUES(@name, @price, @quantity); ");
+                   // command.Parameters.AddWithValue("@id", prod.ID);
                     command.Parameters.AddWithValue("@name", prod.Name);
                     command.Parameters.AddWithValue("@price", prod.Price);
                     command.Parameters.AddWithValue("@quantity", prod.Quantity);
@@ -128,6 +132,30 @@ namespace retail_POS {
                 MessageBox.Show("Failed to update product information in database.\t" + ex.Message);
             }
         }
+        public List<Product> AllProducts(List<Product> products) {
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" SELECT * FROM Products");
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            products.Add(new Product
+                            {
+                                ID = Convert.ToInt32(reader.GetValue(0)),
+                                Name = reader.GetString(1),
+                                Price = Convert.ToDecimal(reader.GetValue(2)),
+                                Quantity = Convert.ToInt32(reader.GetValue(3))
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Failed to access products from database.\t" + ex.Message);
+            }
+            return products;
+        }
         public void RemoveProduct(int id) {
             try {
                 using (var connection = new SqliteConnection(ConnectionString)) {
@@ -179,10 +207,11 @@ namespace retail_POS {
 
                     using (var reader = command.ExecuteReader()) {
                         while (reader.Read()) {
-                            catalog.Add( new Product(reader.GetInt32(0), /* ID */
-                                                        reader.GetString(1), /* Name */
-                                                        reader.GetDecimal(2), /* Price */
-                                                        reader.GetInt32(3) /* Quantity */ ) );
+                            catalog.Add(new Product(
+                                Convert.ToInt32(reader.GetValue(0)),
+                                reader.GetString(1),
+                                Convert.ToDecimal(reader.GetValue(2)),
+                                Convert.ToInt32(reader.GetValue(3))));
                         }
                     }
                 }
@@ -333,6 +362,28 @@ namespace retail_POS {
             }
 
 
+        }
+        public void ResetDB()
+        {
+            using (var connection = new SqliteConnection(connnectionString))
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "DELETE FROM TransactionLineItems;";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "DELETE FROM sqlite_sequence WHERE name = 'TransactionLineItems';"; // this magic command resets the auto increment
+                    command.ExecuteNonQuery();
+                    command.CommandText = "DELETE FROM Transactions;";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "DELETE FROM sqlite_sequence WHERE name = 'Transactions';"; // this magic command resets the auto increment
+                    command.ExecuteNonQuery();
+                    command.CommandText = "DELETE FROM Products;";
+                    command.ExecuteNonQuery();
+                    command.CommandText = "DELETE FROM sqlite_sequence WHERE name = 'Products';"; // this magic command resets the auto increment
+                    command.ExecuteNonQuery();
+                }
+            }
         }
 
 

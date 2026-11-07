@@ -5,7 +5,9 @@ namespace retail_POS {
     {
         List<Product> availableProduct = new List<Product> { };
         List<Product> currentTransactionProducts = new List<Product> { };
-        
+        List<Product> allProducts = new List<Product> { };
+
+
 
         public void initializeLists()
         {
@@ -18,6 +20,7 @@ namespace retail_POS {
             InitializeComponent();
             initializeLists();
             //(new AdminLogin()).Show();
+            new AdminDashboard().Show();
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
