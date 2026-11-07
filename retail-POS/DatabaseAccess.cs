@@ -90,6 +90,44 @@ namespace retail_POS {
                 MessageBox.Show("Failed to update product information in database.\t" + ex.Message);
             }
         }
+        public void UpdateProductStock(int id, int quantity)
+        {
+            try
+            {
+                using (var connection = new SqliteConnection(ConnectionString))
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" UPDATE Products SET Quantity = " + quantity + " WHERE ID = " + id);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to update product information in database.\t" + ex.Message);
+            }
+        }
+        public void UpdateProductPrice(int id, decimal price)
+        {
+            try
+            {
+                using (var connection = new SqliteConnection(ConnectionString))
+                {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" UPDATE Products SET Price = " + price + " WHERE ID = " + id);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to update product information in database.\t" + ex.Message);
+            }
+        }
         public void RemoveProduct(int id) {
             try {
                 using (var connection = new SqliteConnection(ConnectionString)) {

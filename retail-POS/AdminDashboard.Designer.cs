@@ -51,6 +51,7 @@
             tBxAddProduct.Name = "tBxAddProduct";
             tBxAddProduct.Size = new Size(304, 39);
             tBxAddProduct.TabIndex = 0;
+            tBxAddProduct.TextChanged += tBxAddProduct_TextChanged;
             // 
             // label1
             // 
@@ -109,6 +110,7 @@
             tbxChangeInStock.Name = "tbxChangeInStock";
             tbxChangeInStock.Size = new Size(280, 39);
             tbxChangeInStock.TabIndex = 6;
+            tbxChangeInStock.KeyDown += tbxChangeInStock_KeyDown;
             // 
             // label3
             // 
@@ -144,6 +146,7 @@
             tbxChangePrice.Name = "tbxChangePrice";
             tbxChangePrice.Size = new Size(200, 39);
             tbxChangePrice.TabIndex = 10;
+            tbxChangePrice.KeyDown += tbxChangePrice_KeyDown;
             // 
             // label4
             // 
@@ -164,17 +167,19 @@
             btnAddToInventory.TabIndex = 12;
             btnAddToInventory.Text = "Add To Inventory";
             btnAddToInventory.UseVisualStyleBackColor = false;
+            btnAddToInventory.Click += btnAddToInventory_Click;
             // 
             // btnRemoveFromInventory
             // 
             btnRemoveFromInventory.BackColor = SystemColors.HotTrack;
             btnRemoveFromInventory.ForeColor = SystemColors.ScrollBar;
-            btnRemoveFromInventory.Location = new Point(629, 104);
+            btnRemoveFromInventory.Location = new Point(103, 556);
             btnRemoveFromInventory.Name = "btnRemoveFromInventory";
             btnRemoveFromInventory.Size = new Size(180, 82);
             btnRemoveFromInventory.TabIndex = 13;
             btnRemoveFromInventory.Text = "Remove From Inventory";
             btnRemoveFromInventory.UseVisualStyleBackColor = false;
+            btnRemoveFromInventory.Click += btnRemoveFromInventory_Click;
             // 
             // AdminDashboard
             // 
