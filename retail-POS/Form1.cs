@@ -6,21 +6,49 @@ namespace retail_POS {
         List<Product> availableProduct = new List<Product> { };
         List<Product> currentTransactionProducts = new List<Product> { };
         List<Product> allProducts = new List<Product> { };
-
+        DatabaseAccess dbAccess = new DatabaseAccess();
+        int quantityRequested = 1;
+        decimal taxAmount = 0.00m;
+        decimal taxPercent = 0.06m;
+        int testID = 0;
+        decimal cost = 0.00m;
+        decimal totalCost = 0.00m;
 
 
         public void initializeLists()
         {
-            //Pull the list from the database and put each product availableProduct
+            //Pull the list from the database and put each product availableProduct. Make sure to check if the product has any stock and if not don't add to the list.
+            availableProduct = dbAccess.ListProducts();
+            availableProduct = availableProduct.Where(item => item.Quantity > 0).ToList();
 
+            lbxAllProducts.DataSource = null;
+            lbxAllProducts.DataSource = dbAccess.ListProducts();
+            lbxAllProducts.DisplayMember = nameof(Product.Name);
+            lbxAllProducts.ValueMember = nameof(Product.ID);
+
+        }
+
+        public void calculateTotal()
+        {
+            if (lbxCheckoutItems.Items.Count != 0)
+            {
+                foreach (Product item in currentTransactionProducts)
+                {
+                    cost += item.Price;
+                }
+            }
+            taxAmount = cost * taxPercent;
+            totalCost = cost + taxAmount;
+            lblTotals.Text = $"Subtotal: {cost:C}    Tax: {taxAmount:C}    Total: {totalCost:C}";
         }
 
         public Form1()
         {
             InitializeComponent();
             initializeLists();
+            lbxCheckoutItems.DisplayMember = nameof(Product.Name);
+            lblClock.Text = DateTime.Now.ToString("hh:mm tt  MM/dd/yyyy");
             //(new AdminLogin()).Show();
-            new AdminDashboard().Show();
         }
 
         private void btnAddItem_Click(object sender, EventArgs e)
@@ -45,7 +73,9 @@ namespace retail_POS {
                 {
                     if (item.ID == checkID)
                     {
-                        currentTransactionProducts.Add(item);
+                        if (item.Quantity > quantityRequested)
+                            currentTransactionProducts.Add(item);
+                        else { MessageBox.Show("Item out of stock."); }
                         itemFound = true;
                     }
                 }
@@ -58,35 +88,31 @@ namespace retail_POS {
             else
             {
                 //If something is selected add it to the transaction.
-                if (lbxAllProducts.Items.Count != 0)
+                Product selectedProduct = (Product)lbxAllProducts.SelectedItem;
+                if (selectedProduct.Quantity >= quantityRequested)
                 {
-                    if (lbxAllProducts.SelectedIndex != -1)
+                    for (int i = 0; i < quantityRequested; i++)
                     {
-                        currentTransactionProducts.Add((Product)lbxAllProducts.SelectedItem);
-                        lbxCheckoutItems.Items.Add(lbxAllProducts.SelectedItem);
+                        currentTransactionProducts.Add(selectedProduct);
+                        lbxCheckoutItems.Items.Add(selectedProduct);
                     }
                 }
-
+                else { MessageBox.Show("The item does not have enough stock."); }
             }
+            //Change the string on the total box.
+            calculateTotal();
         }
 
         private void btnFinishTransaction_Click(object sender, EventArgs e)
         {
             //Create things that can be 
             List<Product> transactionProducts = new List<Product> { };
-            decimal taxAmount = 0.0m;
-            int testID = 0;
-            decimal cost = 0.00m;
             Transaction newTransaction = new Transaction(testID, DateTime.Now.ToString(), taxAmount, cost);
             newTransaction.ID = 0; //Placeholder ID
 
             if (lbxCheckoutItems.Items.Count != 0)
             {
-                foreach (Product item in currentTransactionProducts)
-                { 
-                    
-                }
-                }
+            }
             else
             {
                 MessageBox.Show("There are no items in the list.");
@@ -95,7 +121,27 @@ namespace retail_POS {
 
         private void btnCancelTransaction_Click(object sender, EventArgs e)
         {
+            currentTransactionProducts.Clear();
             lbxCheckoutItems.Items.Clear();
+            cost = 0;
+            taxAmount = 0;
+            totalCost = 0;
+            calculateTotal();
+        }
+
+        private void clockTimer_Tick(object sender, EventArgs e)
+        {
+            lblClock.Text = DateTime.Now.ToString("hh:mm tt  MM/dd/yyyy");
+        }
+
+        private void lblClock_Click(object sender, EventArgs e)
+        {
+            new AdminDashboard().Show();
+        }
+
+        private void numQuantity_ValueChanged(object sender, EventArgs e)
+        {
+            quantityRequested = (int)numQuantity.Value;
         }
     }
 }
