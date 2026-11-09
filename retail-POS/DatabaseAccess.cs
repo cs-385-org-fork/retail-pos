@@ -23,10 +23,10 @@ namespace retail_POS {
                     command.CommandText = (" CREATE TABLE IF NOT EXISTS Products(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name STRING NOT NULL, Price NOT NULL, Quantity NOT NULL)");
                     command.ExecuteNonQuery();
 
-                    command.CommandText = (" CREATE TABLE IF NOT EXISTS Transactions(ID INTEGER PRIMARY KEY, SaleDate STRING NOT NULL, TaxAmount DOUBLE, GrandTotal DOUBLE NOT NULL)");
+                    command.CommandText = (" CREATE TABLE IF NOT EXISTS Transactions(ID INTEGER PRIMARY KEY AUTOINCREMENT, SaleDate STRING NOT NULL, TaxAmount DOUBLE, GrandTotal DOUBLE NOT NULL)");
                     command.ExecuteNonQuery();
 
-                    command.CommandText = (" CREATE TABLE IF NOT EXISTS TransactionLineItems(ID INTEGER PRIMARY KEY, TransactionID INTEGER NOT NULL, ProductID INTEGER NOT NULL, Quantity INTEGER NOT NULL, LineTotal DOUBLE NOT NULL, "
+                    command.CommandText = (" CREATE TABLE IF NOT EXISTS TransactionLineItems(ID INTEGER PRIMARY KEY AUTOINCREMENT, TransactionID INTEGER NOT NULL, ProductID INTEGER NOT NULL, Quantity INTEGER NOT NULL, LineTotal DOUBLE NOT NULL, "
                                                                                                + "FOREIGN KEY (TransactionID) REFERENCES Products(ID), FOREIGN KEY (ProductID) REFERENCES Transactions(ID) )");
                     command.ExecuteNonQuery();
                 }
