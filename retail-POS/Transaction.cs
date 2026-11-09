@@ -10,6 +10,7 @@ namespace retail_POS
         private string saledate;
         private decimal taxamount;
         private decimal grandtotal;
+        private int uniqueitemcount;
 
         public int ID
         {
@@ -32,6 +33,12 @@ namespace retail_POS
             set { grandtotal = value; }
         }
 
+        public int UniqueItemCount
+        {
+            get { return  uniqueitemcount; }
+            set { uniqueitemcount = value; }
+        }
+
         public Transaction() { /* base constructor */ }
 
         public Transaction(int i, string sd, decimal ta, decimal gt)
@@ -40,6 +47,7 @@ namespace retail_POS
             saledate = sd;
             taxamount = ta;
             grandtotal = gt;
+            uniqueitemcount = 0;
         }
 
 

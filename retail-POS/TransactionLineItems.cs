@@ -51,5 +51,13 @@ namespace retail_POS
         }
 
 
+        public TransactionLineItem(Product product, Transaction transaction, int q, int i)
+        {
+            id = transaction.UniqueItemCount; //Potentially add + 1 here
+            transactionid = transaction.ID;
+            productid = product.ID;
+            linetotal = q * product.Price;
+        }
+
     }
 }
