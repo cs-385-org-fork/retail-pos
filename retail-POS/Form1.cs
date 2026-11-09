@@ -30,6 +30,8 @@ namespace retail_POS {
 
         public void calculateTotal()
         {
+            cost = 0;
+
             if (lbxCheckoutItems.Items.Count != 0)
             {
                 foreach (Product item in currentTransactionProducts)
@@ -73,7 +75,8 @@ namespace retail_POS {
                 {
                     if (item.ID == checkID)
                     {
-                        if (item.Quantity > quantityRequested)
+                        int currentAmount = currentTransactionProducts.Count(item => item.ID == checkID);
+                        if (quantityRequested + currentAmount <= item.Quantity)
                             currentTransactionProducts.Add(item);
                         else { MessageBox.Show("Item out of stock."); }
                         itemFound = true;
@@ -89,7 +92,11 @@ namespace retail_POS {
             {
                 //If something is selected add it to the transaction.
                 Product selectedProduct = (Product)lbxAllProducts.SelectedItem;
-                if (selectedProduct.Quantity >= quantityRequested)
+
+                //Check the amount of times it is already in cart
+                int currentAmount = currentTransactionProducts.Count(Item => Item.ID == selectedProduct.ID);
+
+                if (quantityRequested + currentAmount <= selectedProduct.Quantity)
                 {
                     for (int i = 0; i < quantityRequested; i++)
                     {
