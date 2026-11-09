@@ -73,7 +73,10 @@ namespace retail_POS {
                     if (item.ID == checkID) {
                         int currentAmount = currentTransactionProducts.Count(item => item.ID == checkID);
                         if (quantityRequested + currentAmount <= item.Quantity)
+                        {
                             currentTransactionProducts.Add(item);
+                            lbxCheckoutItems.Items.Add(item);
+                        }
                         else { MessageBox.Show("Item out of stock."); }
                         itemFound = true;
                     }
