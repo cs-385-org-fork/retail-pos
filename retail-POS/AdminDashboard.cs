@@ -24,6 +24,11 @@ namespace retail_POS
                 lblInStockValue.Text = product.Quantity.ToString();
                 lblPriceValue.Text = product.Price.ToString("0.00");
             }
+            else
+            {
+                lblInStockValue.Text = "0";
+                lblPriceValue.Text = "0.00";
+            }
         }
         private void AdminDashboard_Load(object sender, EventArgs e)
         {
@@ -84,6 +89,11 @@ namespace retail_POS
                     LoadInventory();
                 }
             }
+        }
+
+        private void lblInStockValue_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
