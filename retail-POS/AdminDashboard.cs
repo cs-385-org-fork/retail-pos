@@ -50,7 +50,11 @@ namespace retail_POS
             lBxInventory.DataSource = dbAccess.ListProducts();
             lBxInventory.DisplayMember = nameof(Product.Name);
             lBxInventory.ValueMember = nameof(Product.ID);
-            lBxInventory.SelectedIndex = selectedProduct;
+            if (lBxInventory.Items.Count != 0)
+            {
+                lBxInventory.SelectedIndex = selectedProduct;
+            }
+            
         }
         private void btnAddToInventory_Click(object sender, EventArgs e) {
             if (!string.IsNullOrWhiteSpace(tBxAddProduct.Text)) {
