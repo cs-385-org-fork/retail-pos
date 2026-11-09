@@ -43,7 +43,7 @@ namespace retail_POS {
 
         public Form1() {
             InitializeComponent();
-
+            calculateTotal();
             initializeLists();
             lbxCheckoutItems.DisplayMember = nameof(Product.Name);
             lblClock.Text = DateTime.Now.ToString("hh:mm tt  MM/dd/yyyy");
@@ -90,7 +90,8 @@ namespace retail_POS {
                 //Check the amount of times it is already in cart
                 int currentAmount = currentTransactionProducts.Count(Item => Item.ID == selectedProduct.ID);
 
-                if (quantityRequested + currentAmount <= selectedProduct.Quantity) {
+                if (lbxAllProducts.Items.Count == 0) { MessageBox.Show("There are no product available right now"); }
+                else if (quantityRequested + currentAmount <= selectedProduct.Quantity) {
                     for (int i = 0; i < quantityRequested; i++) {
                         currentTransactionProducts.Add(selectedProduct);
                         lbxCheckoutItems.Items.Add(selectedProduct);
