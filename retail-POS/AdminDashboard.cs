@@ -87,6 +87,14 @@ namespace retail_POS
                     LoadInventory();
                 }
             }
+<<<<<<< HEAD
+        }
+
+        private void lblInStockValue_Click(object sender, EventArgs e)
+        {
+
+        }
+=======
         }
 
         private void AdminDashboard_FormClosed(object sender, FormClosedEventArgs e) {
@@ -94,10 +102,6 @@ namespace retail_POS
             register.ReloadForm();
         }
 
-
-        private void lblInStockValue_Click(object sender, EventArgs e)
-        {
-
-        }
+>>>>>>> 48d6ce5ea52492ca3581ad4c3baed4705a9199d8
     }
 }
