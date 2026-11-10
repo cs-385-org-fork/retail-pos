@@ -27,11 +27,6 @@ namespace retail_POS
                 lblInStockValue.Text = product.Quantity.ToString();
                 lblPriceValue.Text = product.Price.ToString("0.00");
             }
-            else
-            {
-                lblInStockValue.Text = "0";
-                lblPriceValue.Text = "0.00";
-            }
         }
         private void lBxInventory_Click(object sender, EventArgs e) {
             selectedProduct = lBxInventory.SelectedIndex;
@@ -87,14 +82,6 @@ namespace retail_POS
                     LoadInventory();
                 }
             }
-<<<<<<< HEAD
-        }
-
-        private void lblInStockValue_Click(object sender, EventArgs e)
-        {
-
-        }
-=======
         }
 
         private void AdminDashboard_FormClosed(object sender, FormClosedEventArgs e) {
@@ -102,6 +89,5 @@ namespace retail_POS
             register.ReloadForm();
         }
 
->>>>>>> 48d6ce5ea52492ca3581ad4c3baed4705a9199d8
     }
 }

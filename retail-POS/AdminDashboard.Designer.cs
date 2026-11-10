@@ -108,7 +108,6 @@
             lblInStockValue.Size = new Size(25, 15);
             lblInStockValue.TabIndex = 5;
             lblInStockValue.Text = "000";
-            lblInStockValue.Click += lblInStockValue_Click;
             // 
             // tbxChangeInStock
             // 
