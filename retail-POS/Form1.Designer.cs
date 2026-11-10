@@ -22,8 +22,7 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             components = new System.ComponentModel.Container();
             btnAddItem = new Button();
             lbxCheckoutItems = new ListBox();
@@ -141,6 +140,7 @@
             lblTotals.Location = new Point(433, 617);
             lblTotals.Margin = new Padding(7, 0, 7, 0);
             lblTotals.Name = "lblTotals";
+            lblTotals.Size = new Size(228, 15);
             lblTotals.Size = new Size(537, 32);
             lblTotals.TabIndex = 9;
             lblTotals.Text = "Subtotal: 00.00      Tax: 00.00      Total: 00.00";

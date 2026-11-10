@@ -1,8 +1,7 @@
 using System.Reflection.PortableExecutable;
 
 namespace retail_POS {
-    public partial class Form1 : Form
-    {
+    public partial class Form1 : Form {
         List<Product> availableProduct = new List<Product> { };
         List<Product> currentTransactionProducts = new List<Product> { };
         List<Product> allProducts = new List<Product> { };
@@ -15,8 +14,7 @@ namespace retail_POS {
         decimal totalCost = 0.00m;
 
 
-        public void initializeLists()
-        {
+        public void initializeLists() {
             //Pull the list from the database and put each product availableProduct. Make sure to check if the product has any stock and if not don't add to the list.
             availableProduct = dbAccess.ListProducts();
             availableProduct = availableProduct.Where(item => item.Quantity > 0).ToList();
@@ -28,14 +26,11 @@ namespace retail_POS {
 
         }
 
-        public void calculateTotal()
-        {
+        public void calculateTotal() {
             cost = 0;
 
-            if (lbxCheckoutItems.Items.Count != 0)
-            {
-                foreach (Product item in currentTransactionProducts)
-                {
+            if (lbxCheckoutItems.Items.Count != 0) {
+                foreach (Product item in currentTransactionProducts) {
                     cost += item.Price;
                 }
             }
@@ -44,62 +39,63 @@ namespace retail_POS {
             lblTotals.Text = $"Subtotal: {cost:C}    Tax: {taxAmount:C}    Total: {totalCost:C}";
         }
 
-        public Form1()
-        {
+
+
+        public Form1() {
             InitializeComponent();
+            calculateTotal();
             initializeLists();
             lbxCheckoutItems.DisplayMember = nameof(Product.Name);
             lblClock.Text = DateTime.Now.ToString("hh:mm tt  MM/dd/yyyy");
             //(new AdminLogin()).Show();
         }
 
-        private void btnAddItem_Click(object sender, EventArgs e)
-        {
+
+        public void ReloadForm() {
+            initializeLists();
+        }
+
+        private void btnAddItem_Click(object sender, EventArgs e) {
             int checkID = 0;
             //Try to convery barcode to an int first
-            if (int.TryParse(tbxBarcode.Text, out int number))
-            {
+            if (int.TryParse(tbxBarcode.Text, out int number)) {
                 checkID = number;
             }
-            else
-            {
+            else {
                 checkID = 0;
                 tbxBarcode.Clear();
             }
             //If the barcode is over 0, check for item.
-            if (checkID > 0)
-            {
+            if (checkID > 0) {
                 bool itemFound = false;
                 //Replace this with a faster loop later
-                foreach (Product item in availableProduct)
-                {
-                    if (item.ID == checkID)
-                    {
+                foreach (Product item in availableProduct) {
+                    if (item.ID == checkID) {
                         int currentAmount = currentTransactionProducts.Count(item => item.ID == checkID);
                         if (quantityRequested + currentAmount <= item.Quantity)
+                        {
                             currentTransactionProducts.Add(item);
+                            lbxCheckoutItems.Items.Add(item);
+                        }
                         else { MessageBox.Show("Item out of stock."); }
                         itemFound = true;
                     }
                 }
-                if (itemFound == false)
-                {
+                if (itemFound == false) {
                     MessageBox.Show("Item ID not found.");
                     tbxBarcode.Clear();
                 }
             }
-            else
-            {
+            else {
                 //If something is selected add it to the transaction.
                 Product selectedProduct = (Product)lbxAllProducts.SelectedItem;
 
                 //Check the amount of times it is already in cart
                 int currentAmount = currentTransactionProducts.Count(Item => Item.ID == selectedProduct.ID);
 
-                if (quantityRequested + currentAmount <= selectedProduct.Quantity)
-                {
-                    for (int i = 0; i < quantityRequested; i++)
-                    {
+                if (lbxAllProducts.Items.Count == 0) { MessageBox.Show("There are no product available right now"); }
+                else if (quantityRequested + currentAmount <= selectedProduct.Quantity) {
+                    for (int i = 0; i < quantityRequested; i++) {
                         currentTransactionProducts.Add(selectedProduct);
                         lbxCheckoutItems.Items.Add(selectedProduct);
                     }
@@ -110,24 +106,20 @@ namespace retail_POS {
             calculateTotal();
         }
 
-        private void btnFinishTransaction_Click(object sender, EventArgs e)
-        {
+        private void btnFinishTransaction_Click(object sender, EventArgs e) {
             //Create things that can be 
             List<Product> transactionProducts = new List<Product> { };
             Transaction newTransaction = new Transaction(testID, DateTime.Now.ToString(), taxAmount, cost);
             newTransaction.ID = 0; //Placeholder ID
 
-            if (lbxCheckoutItems.Items.Count != 0)
-            {
+            if (lbxCheckoutItems.Items.Count != 0) {
             }
-            else
-            {
+            else {
                 MessageBox.Show("There are no items in the list.");
             }
         }
 
-        private void btnCancelTransaction_Click(object sender, EventArgs e)
-        {
+        private void btnCancelTransaction_Click(object sender, EventArgs e) {
             currentTransactionProducts.Clear();
             lbxCheckoutItems.Items.Clear();
             cost = 0;
@@ -136,19 +128,19 @@ namespace retail_POS {
             calculateTotal();
         }
 
-        private void clockTimer_Tick(object sender, EventArgs e)
-        {
+        private void clockTimer_Tick(object sender, EventArgs e) {
             lblClock.Text = DateTime.Now.ToString("hh:mm tt  MM/dd/yyyy");
         }
 
-        private void lblClock_Click(object sender, EventArgs e)
-        {
-            new AdminDashboard().Show();
+        private void lblClock_Click(object sender, EventArgs e) {
+            new AdminDashboard(this).Show();
+            this.Hide();
         }
 
-        private void numQuantity_ValueChanged(object sender, EventArgs e)
-        {
+        private void numQuantity_ValueChanged(object sender, EventArgs e) {
             quantityRequested = (int)numQuantity.Value;
         }
+
+        
     }
 }
