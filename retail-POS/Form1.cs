@@ -107,15 +107,36 @@ namespace retail_POS {
         }
 
         private void btnFinishTransaction_Click(object sender, EventArgs e) {
-            //Create things that can be 
-            List<Product> transactionProducts = new List<Product> { };
-            Transaction newTransaction = new Transaction(testID, DateTime.Now.ToString(), taxAmount, cost);
-            newTransaction.ID = 0; //Placeholder ID
+            if (lbxCheckoutItems.Items.Count != 0)
+            {
+                List<TransactionLineItem> transactionProducts = new List<TransactionLineItem> { };
+                calculateTotal();
+                Transaction newTransaction = new Transaction(testID, DateTime.Now.ToString(), taxAmount, cost);
+                newTransaction.ID = 0; //Placeholder ID please check database for last ID and increment that by one
 
-            if (lbxCheckoutItems.Items.Count != 0) {
+                int itemQuantity = 1;
+                int Iid = 0;
+                foreach (Product product in currentTransactionProducts)
+                {
+                    //Check the quantity of each item, remove them from the database, and send the quantity + item as a transactionItem
+                    foreach (TransactionLineItem checkProduct in transactionProducts)
+                    {
+                        if (checkProduct.ProductID != product.ID)
+                        {
+                            TransactionLineItem newItem = new TransactionLineItem(product, newTransaction, itemQuantity, Iid);
+                            Iid++;
+                        }
+                        else
+                        {
+                            checkProduct.Quantity++;
+                        }
+                    }
+                }
             }
-            else {
+            else
+            {
                 MessageBox.Show("There are no items in the list.");
+                return;
             }
         }
 
