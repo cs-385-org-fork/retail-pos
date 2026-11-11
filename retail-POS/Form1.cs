@@ -131,7 +131,10 @@ namespace retail_POS {
                             checkProduct.Quantity++;
                         }
                     }
+                    //dbAccess.RemoveProduct(product.ID); //Replace with just removing one from the stock of the item.
                 }
+                //Send the transaction to the database
+                //Convert the list of line items from transactionProducts into the database
             }
             else
             {
