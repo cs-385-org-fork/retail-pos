@@ -22,8 +22,7 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
-        {
+        private void InitializeComponent() {
             components = new System.ComponentModel.Container();
             btnAddItem = new Button();
             lbxCheckoutItems = new ListBox();
@@ -35,17 +34,19 @@
             clockTimer = new System.Windows.Forms.Timer(components);
             numQuantity = new NumericUpDown();
             lblTotals = new Label();
+            lblQuantity = new Label();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
             SuspendLayout();
             // 
             // btnAddItem
             // 
             btnAddItem.BackColor = SystemColors.ScrollBar;
+            btnAddItem.Font = new Font("Segoe UI Black", 14F, FontStyle.Bold);
             btnAddItem.ForeColor = SystemColors.MenuHighlight;
-            btnAddItem.Location = new Point(1028, 533);
+            btnAddItem.Location = new Point(585, 468);
             btnAddItem.Margin = new Padding(7, 4, 7, 4);
             btnAddItem.Name = "btnAddItem";
-            btnAddItem.Size = new Size(450, 73);
+            btnAddItem.Size = new Size(284, 73);
             btnAddItem.TabIndex = 0;
             btnAddItem.Text = "Add Item";
             btnAddItem.UseVisualStyleBackColor = false;
@@ -55,30 +56,31 @@
             // 
             lbxCheckoutItems.BackColor = SystemColors.ActiveCaption;
             lbxCheckoutItems.FormattingEnabled = true;
-            lbxCheckoutItems.Location = new Point(22, 19);
+            lbxCheckoutItems.Location = new Point(16, 13);
             lbxCheckoutItems.Margin = new Padding(7, 4, 7, 4);
             lbxCheckoutItems.Name = "lbxCheckoutItems";
-            lbxCheckoutItems.Size = new Size(989, 574);
+            lbxCheckoutItems.Size = new Size(555, 529);
             lbxCheckoutItems.TabIndex = 2;
             // 
             // tbxBarcode
             // 
             tbxBarcode.BackColor = SystemColors.InactiveCaption;
-            tbxBarcode.Location = new Point(1028, 19);
+            tbxBarcode.Location = new Point(585, 13);
             tbxBarcode.Margin = new Padding(7, 4, 7, 4);
             tbxBarcode.Name = "tbxBarcode";
             tbxBarcode.PlaceholderText = "Enter Barcode/Product ID";
-            tbxBarcode.Size = new Size(446, 23);
+            tbxBarcode.Size = new Size(284, 24);
             tbxBarcode.TabIndex = 3;
             // 
             // btnCancelTransaction
             // 
             btnCancelTransaction.BackColor = SystemColors.ScrollBar;
+            btnCancelTransaction.Font = new Font("Segoe UI Black", 14F, FontStyle.Bold);
             btnCancelTransaction.ForeColor = SystemColors.MenuHighlight;
-            btnCancelTransaction.Location = new Point(22, 610);
+            btnCancelTransaction.Location = new Point(16, 550);
             btnCancelTransaction.Margin = new Padding(7, 4, 7, 4);
             btnCancelTransaction.Name = "btnCancelTransaction";
-            btnCancelTransaction.Size = new Size(345, 105);
+            btnCancelTransaction.Size = new Size(250, 99);
             btnCancelTransaction.TabIndex = 4;
             btnCancelTransaction.Text = "Cancel Transaction";
             btnCancelTransaction.UseVisualStyleBackColor = false;
@@ -87,12 +89,12 @@
             // btnFinishTransaction
             // 
             btnFinishTransaction.BackColor = SystemColors.MenuHighlight;
-            btnFinishTransaction.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnFinishTransaction.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             btnFinishTransaction.ForeColor = SystemColors.InactiveCaption;
-            btnFinishTransaction.Location = new Point(1028, 617);
+            btnFinishTransaction.Location = new Point(585, 550);
             btnFinishTransaction.Margin = new Padding(7, 4, 7, 4);
             btnFinishTransaction.Name = "btnFinishTransaction";
-            btnFinishTransaction.Size = new Size(450, 98);
+            btnFinishTransaction.Size = new Size(284, 98);
             btnFinishTransaction.TabIndex = 5;
             btnFinishTransaction.Text = "Finish Transaction";
             btnFinishTransaction.UseVisualStyleBackColor = false;
@@ -102,10 +104,10 @@
             // 
             lbxAllProducts.BackColor = SystemColors.ActiveCaption;
             lbxAllProducts.FormattingEnabled = true;
-            lbxAllProducts.Location = new Point(1028, 73);
+            lbxAllProducts.Location = new Point(585, 45);
             lbxAllProducts.Margin = new Padding(7, 4, 7, 4);
             lbxAllProducts.Name = "lbxAllProducts";
-            lbxAllProducts.Size = new Size(446, 379);
+            lbxAllProducts.Size = new Size(284, 379);
             lbxAllProducts.TabIndex = 6;
             // 
             // lblClock
@@ -128,10 +130,10 @@
             // numQuantity
             // 
             numQuantity.BackColor = SystemColors.InactiveCaption;
-            numQuantity.Location = new Point(1028, 474);
+            numQuantity.Location = new Point(693, 434);
             numQuantity.Margin = new Padding(7, 6, 7, 6);
             numQuantity.Name = "numQuantity";
-            numQuantity.Size = new Size(450, 23);
+            numQuantity.Size = new Size(176, 24);
             numQuantity.TabIndex = 8;
             numQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
             numQuantity.ValueChanged += numQuantity_ValueChanged;
@@ -139,19 +141,31 @@
             // lblTotals
             // 
             lblTotals.AutoSize = true;
-            lblTotals.Location = new Point(433, 617);
+            lblTotals.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold);
+            lblTotals.Location = new Point(280, 550);
             lblTotals.Margin = new Padding(7, 0, 7, 0);
             lblTotals.Name = "lblTotals";
-            lblTotals.Size = new Size(266, 15);
+            lblTotals.Size = new Size(190, 90);
             lblTotals.TabIndex = 9;
-            lblTotals.Text = "Subtotal: 00.00      Tax: 00.00      Total: 00.00";
+            lblTotals.Text = "Subtotal: $00.00\r\nTax: $00.00\r\nTotal: $00.00";
+            // 
+            // lblQuantity
+            // 
+            lblQuantity.AutoSize = true;
+            lblQuantity.Location = new Point(585, 436);
+            lblQuantity.Margin = new Padding(7, 0, 7, 0);
+            lblQuantity.Name = "lblQuantity";
+            lblQuantity.Size = new Size(94, 15);
+            lblQuantity.TabIndex = 10;
+            lblQuantity.Text = "Item Quantity:";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
-            ClientSize = new Size(1500, 721);
+            ClientSize = new Size(884, 661);
+            Controls.Add(lblQuantity);
             Controls.Add(lblTotals);
             Controls.Add(numQuantity);
             Controls.Add(lblClock);
@@ -164,7 +178,7 @@
             Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             Margin = new Padding(7, 4, 7, 4);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Point Of Sale System";
             ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -183,5 +197,6 @@
         private System.Windows.Forms.Timer clockTimer;
         private NumericUpDown numQuantity;
         private Label lblTotals;
+        private Label lblQuantity;
     }
 }

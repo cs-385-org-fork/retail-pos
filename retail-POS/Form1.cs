@@ -47,6 +47,9 @@ namespace retail_POS {
             initializeLists();
             lbxCheckoutItems.DisplayMember = nameof(Product.Name);
             lblClock.Text = DateTime.Now.ToString("hh:mm tt  MM/dd/yyyy");
+            lblTotals.Text = "Subtotal:\t $00.00" + "\n"
+                           + "Tax:\t $00.00" + "\n"
+                           + "Total:\t $00.00";
             //(new AdminLogin()).Show();
         }
 
@@ -131,10 +134,14 @@ namespace retail_POS {
                             checkProduct.Quantity++;
                         }
                     }
-                    //dbAccess.RemoveProduct(product.ID); //Replace with just removing one from the stock of the item.
+                    dbAccess.DecrementStock(product.ID, 1);
                 }
-                //Send the transaction to the database
-                //Convert the list of line items from transactionProducts into the database
+
+                dbAccess.AddTransaction(newTransaction); //Send the transaction to the database
+
+                foreach (TransactionLineItem newTransLineItem in transactionProducts) { //Convert the list of line items from transactionProducts into the database
+                    dbAccess.AddTransactionLineItem(newTransLineItem.TransactionID, newTransLineItem.ProductID, newTransLineItem.Quantity);
+                }
             }
             else
             {
