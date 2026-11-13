@@ -113,10 +113,11 @@
             // lblClock
             // 
             lblClock.AutoSize = true;
-            lblClock.Location = new Point(555, 681);
+            lblClock.Font = new Font("Segoe UI Black", 12F, FontStyle.Bold);
+            lblClock.Location = new Point(379, 628);
             lblClock.Margin = new Padding(7, 0, 7, 0);
             lblClock.Name = "lblClock";
-            lblClock.Size = new Size(138, 15);
+            lblClock.Size = new Size(192, 21);
             lblClock.TabIndex = 7;
             lblClock.Text = "00:00:00 AM 00/00/00";
             lblClock.Click += lblClock_Click;
@@ -141,11 +142,11 @@
             // lblTotals
             // 
             lblTotals.AutoSize = true;
-            lblTotals.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold);
+            lblTotals.Font = new Font("Segoe UI Black", 14F, FontStyle.Bold);
             lblTotals.Location = new Point(280, 550);
             lblTotals.Margin = new Padding(7, 0, 7, 0);
             lblTotals.Name = "lblTotals";
-            lblTotals.Size = new Size(190, 90);
+            lblTotals.Size = new Size(164, 75);
             lblTotals.TabIndex = 9;
             lblTotals.Text = "Subtotal: $00.00\r\nTax: $00.00\r\nTotal: $00.00";
             // 
