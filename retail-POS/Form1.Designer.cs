@@ -35,6 +35,7 @@
             numQuantity = new NumericUpDown();
             lblTotals = new Label();
             lblQuantity = new Label();
+            btnRemoveItem = new Button();
             ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
             SuspendLayout();
             // 
@@ -43,10 +44,10 @@
             btnAddItem.BackColor = SystemColors.ScrollBar;
             btnAddItem.Font = new Font("Segoe UI Black", 14F, FontStyle.Bold);
             btnAddItem.ForeColor = SystemColors.MenuHighlight;
-            btnAddItem.Location = new Point(585, 468);
+            btnAddItem.Location = new Point(585, 444);
             btnAddItem.Margin = new Padding(7, 4, 7, 4);
             btnAddItem.Name = "btnAddItem";
-            btnAddItem.Size = new Size(284, 73);
+            btnAddItem.Size = new Size(284, 45);
             btnAddItem.TabIndex = 0;
             btnAddItem.Text = "Add Item";
             btnAddItem.UseVisualStyleBackColor = false;
@@ -107,7 +108,7 @@
             lbxAllProducts.Location = new Point(585, 45);
             lbxAllProducts.Margin = new Padding(7, 4, 7, 4);
             lbxAllProducts.Name = "lbxAllProducts";
-            lbxAllProducts.Size = new Size(284, 379);
+            lbxAllProducts.Size = new Size(284, 349);
             lbxAllProducts.TabIndex = 6;
             // 
             // lblClock
@@ -131,7 +132,7 @@
             // numQuantity
             // 
             numQuantity.BackColor = SystemColors.InactiveCaption;
-            numQuantity.Location = new Point(693, 434);
+            numQuantity.Location = new Point(693, 410);
             numQuantity.Margin = new Padding(7, 6, 7, 6);
             numQuantity.Name = "numQuantity";
             numQuantity.Size = new Size(176, 24);
@@ -153,12 +154,26 @@
             // lblQuantity
             // 
             lblQuantity.AutoSize = true;
-            lblQuantity.Location = new Point(585, 436);
+            lblQuantity.Location = new Point(585, 412);
             lblQuantity.Margin = new Padding(7, 0, 7, 0);
             lblQuantity.Name = "lblQuantity";
             lblQuantity.Size = new Size(94, 15);
             lblQuantity.TabIndex = 10;
             lblQuantity.Text = "Item Quantity:";
+            // 
+            // btnRemoveItem
+            // 
+            btnRemoveItem.BackColor = SystemColors.ScrollBar;
+            btnRemoveItem.Font = new Font("Segoe UI Black", 14F, FontStyle.Bold);
+            btnRemoveItem.ForeColor = Color.Crimson;
+            btnRemoveItem.Location = new Point(585, 497);
+            btnRemoveItem.Margin = new Padding(7, 4, 7, 4);
+            btnRemoveItem.Name = "btnRemoveItem";
+            btnRemoveItem.Size = new Size(284, 45);
+            btnRemoveItem.TabIndex = 11;
+            btnRemoveItem.Text = "Remove Item";
+            btnRemoveItem.UseVisualStyleBackColor = false;
+            btnRemoveItem.Click += btnRemoveItem_Click;
             // 
             // Form1
             // 
@@ -166,6 +181,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
             ClientSize = new Size(884, 661);
+            Controls.Add(btnRemoveItem);
             Controls.Add(lblQuantity);
             Controls.Add(lblTotals);
             Controls.Add(numQuantity);
@@ -199,5 +215,6 @@
         private NumericUpDown numQuantity;
         private Label lblTotals;
         private Label lblQuantity;
+        private Button btnRemoveItem;
     }
 }

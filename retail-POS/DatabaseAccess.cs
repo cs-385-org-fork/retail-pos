@@ -230,12 +230,14 @@ namespace retail_POS {
                     var command = connection.CreateCommand();
                     command.CommandText = (" SELECT Quantity FROM Products WHERE ID = " + id);
 
-                    int currentStock;
+                    int currentStock = 0;
                     using (var reader = command.ExecuteReader()) {
-                        currentStock = reader.GetInt32(0);
+                        while (reader.Read()) {
+                            currentStock = reader.GetInt32(0);
+                        }
                     }
-
-                    command.CommandText = (" UPDATE Products SET Quantity = " + (currentStock - amount) + "WHERE ID = " + id);
+                    
+                    command.CommandText = (" UPDATE Products SET Quantity = " + (currentStock - amount) + " WHERE ID = " + id);
 
                     command.ExecuteNonQuery();
                 }

@@ -36,7 +36,10 @@ namespace retail_POS {
             }
             taxAmount = cost * taxPercent;
             totalCost = cost + taxAmount;
-            lblTotals.Text = $"Subtotal: {cost:C}    Tax: {taxAmount:C}    Total: {totalCost:C}";
+            //lblTotals.Text = $"Subtotal: {}    Tax: {:C}    Total: {:C}";
+            lblTotals.Text = "Subtotal:\t " + cost.ToString("C2") + "\n"
+                           + "Tax:\t " + taxAmount.ToString("C2") + "\n"
+                           + "Total:\t " + totalCost.ToString("C2");
         }
 
 
@@ -75,8 +78,7 @@ namespace retail_POS {
                 foreach (Product item in availableProduct) {
                     if (item.ID == checkID) {
                         int currentAmount = currentTransactionProducts.Count(item => item.ID == checkID);
-                        if (quantityRequested + currentAmount <= item.Quantity)
-                        {
+                        if (quantityRequested + currentAmount <= item.Quantity) {
                             currentTransactionProducts.Add(item);
                             lbxCheckoutItems.Items.Add(item);
                         }
@@ -109,9 +111,14 @@ namespace retail_POS {
             calculateTotal();
         }
 
+        private void btnRemoveItem_Click(object sender, EventArgs e) {
+            if (lbxCheckoutItems.SelectedIndex == -1) {
+                MessageBox.Show("No Item is selected.");
+            }
+        }
+
         private void btnFinishTransaction_Click(object sender, EventArgs e) {
-            if (lbxCheckoutItems.Items.Count != 0)
-            {
+            if (lbxCheckoutItems.Items.Count != 0) {
                 List<TransactionLineItem> transactionProducts = new List<TransactionLineItem> { };
                 calculateTotal();
                 Transaction newTransaction = new Transaction(testID, DateTime.Now.ToString(), taxAmount, cost);
@@ -119,18 +126,14 @@ namespace retail_POS {
 
                 int itemQuantity = 1;
                 int Iid = 0;
-                foreach (Product product in currentTransactionProducts)
-                {
+                foreach (Product product in currentTransactionProducts) {
                     //Check the quantity of each item, remove them from the database, and send the quantity + item as a transactionItem
-                    foreach (TransactionLineItem checkProduct in transactionProducts)
-                    {
-                        if (checkProduct.ProductID != product.ID)
-                        {
+                    foreach (TransactionLineItem checkProduct in transactionProducts) {
+                        if (checkProduct.ProductID != product.ID) {
                             TransactionLineItem newItem = new TransactionLineItem(product, newTransaction, itemQuantity, Iid);
                             Iid++;
                         }
-                        else
-                        {
+                        else {
                             checkProduct.Quantity++;
                         }
                     }
@@ -143,8 +146,7 @@ namespace retail_POS {
                     dbAccess.AddTransactionLineItem(newTransLineItem.TransactionID, newTransLineItem.ProductID, newTransLineItem.Quantity);
                 }
             }
-            else
-            {
+            else {
                 MessageBox.Show("There are no items in the list.");
                 return;
             }
