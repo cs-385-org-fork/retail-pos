@@ -10,11 +10,13 @@ namespace retail_POS {
     public partial class AdminLogin : Form {
 
         UserDatabaseAccess udbaccess;
+        Form1 register;
 
-        public AdminLogin() {
+        public AdminLogin(Form1 reg) {
             InitializeComponent();
 
             udbaccess = new UserDatabaseAccess();
+            register = reg;
         }
 
         private void btnLogin_Click(object sender, EventArgs e) {
@@ -22,6 +24,9 @@ namespace retail_POS {
 
             if (login) {
                 MessageBox.Show("Login successful!");
+
+                register.OpenAdminDashboard();
+                this.Close();
             }
             else {
                 MessageBox.Show("Login failed.");
@@ -33,9 +38,8 @@ namespace retail_POS {
         }
 
         private void btnSalt_Click(object sender, EventArgs e) {
-            string salty = udbaccess.Salt(tbxPassword.Text);
 
-            MessageBox.Show(salty);
+            MessageBox.Show("User: " + tbxUsername.Text + "\n\nStored Password: " + udbaccess.GetSaltedPassword(tbxUsername.Text));
         }
     }
 }

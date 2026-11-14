@@ -48,6 +48,8 @@ namespace retail_POS {
                     var command = connection.CreateCommand();
                     command.CommandText = (" INSERT INTO Administrators (Username,Password) Values ('" + uname + "', '" + Salt(pword) + "') ");
                     command.ExecuteNonQuery();
+
+                    MessageBox.Show("User \"" + uname + "\" has been created!");
                 }
             }
             catch (Exception ex) {
@@ -62,10 +64,13 @@ namespace retail_POS {
                     var command = connection.CreateCommand();
                     command.CommandText = (" SELECT Password FROM Administrators WHERE Username = '" + uname + "'");
 
-                    string storedPword;
+                    string storedPword = "";
 
                     using (var reader = command.ExecuteReader()) {
-                        storedPword = reader.GetString(0);
+                        while (reader.Read())
+                        {
+                            storedPword = reader.GetString(0);
+                        }
                     }
 
                     if ( storedPword == Salt(pword) ) {
@@ -91,13 +96,17 @@ namespace retail_POS {
                     var command = connection.CreateCommand();
                     command.CommandText = (" SELECT Password FROM Administrators WHERE Username = '" + uname + "'");
 
-                    using (var reader = command.ExecuteReader()) {
-                        salty = reader.GetString(0);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            salty = reader.GetString(0);
+                        }
                     }
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show("fuck.\t" + ex.Message);
+                MessageBox.Show("Failed to retrieve information from database.\t" + ex.Message);
             }
             return salty;
         }

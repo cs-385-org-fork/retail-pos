@@ -61,6 +61,12 @@ namespace retail_POS {
             initializeLists();
         }
 
+        public void OpenAdminDashboard()
+        {
+            new AdminDashboard(this).Show();
+            this.Hide();
+        }
+
         private void btnAddItem_Click(object sender, EventArgs e) {
             int checkID = 0;
             //Try to convery barcode to an int first
@@ -115,6 +121,12 @@ namespace retail_POS {
             if (lbxCheckoutItems.SelectedIndex == -1) {
                 MessageBox.Show("No Item is selected.");
             }
+            else {
+                currentTransactionProducts.RemoveAt(lbxCheckoutItems.SelectedIndex);
+                lbxCheckoutItems.Items.RemoveAt(lbxCheckoutItems.SelectedIndex);
+
+                calculateTotal();
+            }
         }
 
         private void btnFinishTransaction_Click(object sender, EventArgs e) {
@@ -166,8 +178,9 @@ namespace retail_POS {
         }
 
         private void lblClock_Click(object sender, EventArgs e) {
-            new AdminDashboard(this).Show();
-            this.Hide();
+            //new AdminDashboard(this).Show();
+
+            new AdminLogin(this).Show();
         }
 
         private void numQuantity_ValueChanged(object sender, EventArgs e) {
