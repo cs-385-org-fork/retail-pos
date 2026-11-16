@@ -13,6 +13,7 @@ namespace retail_POS
         Form1 register;
 
         private int selectedProduct = 0;
+        private int selectedTransaction = 0;
 
         public AdminDashboard(Form1 reg) {
             InitializeComponent();
@@ -20,6 +21,7 @@ namespace retail_POS
             register = reg;
 
             LoadInventory();
+            LoadTransactions();
         }
 
         private void lBxInventory_SelectedIndexChanged(object sender, EventArgs e) {
@@ -50,11 +52,10 @@ namespace retail_POS
             lBxInventory.DataSource = dbAccess.ListProducts();
             lBxInventory.DisplayMember = nameof(Product.Name);
             lBxInventory.ValueMember = nameof(Product.ID);
-            if (lBxInventory.Items.Count != 0)
-            {
+            if (lBxInventory.Items.Count != 0) {
                 lBxInventory.SelectedIndex = selectedProduct;
             }
-            
+
         }
         private void btnAddToInventory_Click(object sender, EventArgs e) {
             if (!string.IsNullOrWhiteSpace(tBxAddProduct.Text)) {
@@ -89,5 +90,33 @@ namespace retail_POS
             register.ReloadForm();
         }
 
+        private void LoadTransactions() {
+            selectedTransaction = 0;
+            lbxTransactions.Items.Clear();
+
+            List<Transaction> transactions = dbAccess.ListTransactions();
+            foreach (Transaction trans in transactions) {
+                lbxTransactions.Items.Add(trans.ID + " - " + trans.SaleDate + " - $" + trans.GrandTotal);
+            }
+
+        }
+
+        private void lbxTransactions_SelectedIndexChanged(object sender, EventArgs e) {
+            selectedTransaction = (lbxTransactions.SelectedIndex + 1);
+            Transaction trans = dbAccess.GetTransaction(selectedTransaction);
+
+            lblTransDetails1.Text = "ID: " + trans.ID + "\n"
+                                    + "Subtotal: " + (trans.GrandTotal - trans.TaxAmount).ToString("C2") + "\n"
+                                    + "Tax Amount: " + trans.TaxAmount.ToString("C2") + "\n" 
+                                    + "Grand Total: " + trans.GrandTotal.ToString("C2");
+
+            //List <TransactionLineItem> lineItems = dbAccess.ListTransactionLineItemsOfTransaction(trans.ID);
+            List < TransactionLineItem > lineItems = dbAccess.ListTransactionLineItems();
+            lblTransDetails2.Text = "Line Items:" + "\n"
+                                    + "ID     Quantity     Total";
+            foreach (TransactionLineItem tli in lineItems) {
+                lblTransDetails2.Text = ("\n" + dbAccess.GetProduct(tli.ProductID) + "\t" + tli.Quantity + "\t" + tli.LineTotal.ToString("C2"));
+            }
+        }
     }
 }

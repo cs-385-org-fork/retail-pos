@@ -41,12 +41,17 @@
             label4 = new Label();
             btnAddToInventory = new Button();
             btnRemoveFromInventory = new Button();
+            lbxTransactions = new ListBox();
+            lblTransRecord = new Label();
+            lblTransDetailsTitle = new Label();
+            lblTransDetails1 = new Label();
+            lblTransDetails2 = new Label();
             SuspendLayout();
             // 
             // tBxAddProduct
             // 
             tBxAddProduct.BackColor = SystemColors.InactiveCaption;
-            tBxAddProduct.Location = new Point(55, 51);
+            tBxAddProduct.Location = new Point(25, 51);
             tBxAddProduct.Margin = new Padding(2, 1, 2, 1);
             tBxAddProduct.Name = "tBxAddProduct";
             tBxAddProduct.Size = new Size(166, 23);
@@ -58,7 +63,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Verdana", 10.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.InfoText;
-            label1.Location = new Point(55, 23);
+            label1.Location = new Point(25, 23);
             label1.Margin = new Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new Size(158, 18);
@@ -70,7 +75,7 @@
             lBxInventory.BackColor = SystemColors.InactiveCaption;
             lBxInventory.ForeColor = SystemColors.ActiveCaptionText;
             lBxInventory.FormattingEnabled = true;
-            lBxInventory.Location = new Point(55, 130);
+            lBxInventory.Location = new Point(25, 130);
             lBxInventory.Margin = new Padding(2, 1, 2, 1);
             lBxInventory.Name = "lBxInventory";
             lBxInventory.Size = new Size(166, 124);
@@ -82,7 +87,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Verdana", 10.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(55, 105);
+            label2.Location = new Point(25, 105);
             label2.Margin = new Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new Size(141, 18);
@@ -92,7 +97,7 @@
             // lblInStock
             // 
             lblInStock.AutoSize = true;
-            lblInStock.Location = new Point(230, 130);
+            lblInStock.Location = new Point(200, 130);
             lblInStock.Margin = new Padding(2, 0, 2, 0);
             lblInStock.Name = "lblInStock";
             lblInStock.Size = new Size(99, 15);
@@ -102,7 +107,7 @@
             // lblInStockValue
             // 
             lblInStockValue.AutoSize = true;
-            lblInStockValue.Location = new Point(339, 130);
+            lblInStockValue.Location = new Point(309, 130);
             lblInStockValue.Margin = new Padding(2, 0, 2, 0);
             lblInStockValue.Name = "lblInStockValue";
             lblInStockValue.Size = new Size(25, 15);
@@ -112,7 +117,7 @@
             // tbxChangeInStock
             // 
             tbxChangeInStock.BackColor = SystemColors.InactiveCaption;
-            tbxChangeInStock.Location = new Point(230, 166);
+            tbxChangeInStock.Location = new Point(200, 166);
             tbxChangeInStock.Margin = new Padding(2, 1, 2, 1);
             tbxChangeInStock.Name = "tbxChangeInStock";
             tbxChangeInStock.Size = new Size(153, 23);
@@ -122,7 +127,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(230, 150);
+            label3.Location = new Point(200, 150);
             label3.Margin = new Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new Size(140, 15);
@@ -132,7 +137,7 @@
             // lblPrice
             // 
             lblPrice.AutoSize = true;
-            lblPrice.Location = new Point(230, 198);
+            lblPrice.Location = new Point(200, 198);
             lblPrice.Margin = new Padding(2, 0, 2, 0);
             lblPrice.Name = "lblPrice";
             lblPrice.Size = new Size(39, 15);
@@ -142,7 +147,7 @@
             // lblPriceValue
             // 
             lblPriceValue.AutoSize = true;
-            lblPriceValue.Location = new Point(275, 198);
+            lblPriceValue.Location = new Point(245, 198);
             lblPriceValue.Margin = new Padding(2, 0, 2, 0);
             lblPriceValue.Name = "lblPriceValue";
             lblPriceValue.Size = new Size(25, 15);
@@ -152,7 +157,7 @@
             // tbxChangePrice
             // 
             tbxChangePrice.BackColor = SystemColors.InactiveCaption;
-            tbxChangePrice.Location = new Point(230, 229);
+            tbxChangePrice.Location = new Point(200, 229);
             tbxChangePrice.Margin = new Padding(2, 1, 2, 1);
             tbxChangePrice.Name = "tbxChangePrice";
             tbxChangePrice.Size = new Size(110, 23);
@@ -162,7 +167,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(230, 213);
+            label4.Location = new Point(200, 213);
             label4.Margin = new Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new Size(77, 15);
@@ -173,7 +178,7 @@
             // 
             btnAddToInventory.BackColor = SystemColors.ScrollBar;
             btnAddToInventory.ForeColor = SystemColors.HotTrack;
-            btnAddToInventory.Location = new Point(245, 49);
+            btnAddToInventory.Location = new Point(215, 49);
             btnAddToInventory.Margin = new Padding(2, 1, 2, 1);
             btnAddToInventory.Name = "btnAddToInventory";
             btnAddToInventory.Size = new Size(79, 38);
@@ -186,7 +191,7 @@
             // 
             btnRemoveFromInventory.BackColor = SystemColors.HotTrack;
             btnRemoveFromInventory.ForeColor = SystemColors.ScrollBar;
-            btnRemoveFromInventory.Location = new Point(55, 261);
+            btnRemoveFromInventory.Location = new Point(25, 261);
             btnRemoveFromInventory.Margin = new Padding(2, 1, 2, 1);
             btnRemoveFromInventory.Name = "btnRemoveFromInventory";
             btnRemoveFromInventory.Size = new Size(97, 38);
@@ -195,12 +200,71 @@
             btnRemoveFromInventory.UseVisualStyleBackColor = false;
             btnRemoveFromInventory.Click += btnRemoveFromInventory_Click;
             // 
+            // lbxTransactions
+            // 
+            lbxTransactions.BackColor = SystemColors.InactiveCaption;
+            lbxTransactions.FormattingEnabled = true;
+            lbxTransactions.Location = new Point(441, 49);
+            lbxTransactions.Name = "lbxTransactions";
+            lbxTransactions.Size = new Size(206, 199);
+            lbxTransactions.TabIndex = 14;
+            lbxTransactions.SelectedIndexChanged += lbxTransactions_SelectedIndexChanged;
+            // 
+            // lblTransRecord
+            // 
+            lblTransRecord.AutoSize = true;
+            lblTransRecord.Font = new Font("Verdana", 10.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTransRecord.ForeColor = SystemColors.InfoText;
+            lblTransRecord.Location = new Point(441, 23);
+            lblTransRecord.Margin = new Padding(2, 0, 2, 0);
+            lblTransRecord.Name = "lblTransRecord";
+            lblTransRecord.Size = new Size(206, 18);
+            lblTransRecord.TabIndex = 15;
+            lblTransRecord.Text = "Transaction Master Record";
+            // 
+            // lblTransDetailsTitle
+            // 
+            lblTransDetailsTitle.AutoSize = true;
+            lblTransDetailsTitle.Font = new Font("Verdana", 10.875F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTransDetailsTitle.ForeColor = SystemColors.InfoText;
+            lblTransDetailsTitle.Location = new Point(661, 23);
+            lblTransDetailsTitle.Margin = new Padding(2, 0, 2, 0);
+            lblTransDetailsTitle.Name = "lblTransDetailsTitle";
+            lblTransDetailsTitle.Size = new Size(147, 18);
+            lblTransDetailsTitle.TabIndex = 16;
+            lblTransDetailsTitle.Text = "Transaction Details";
+            // 
+            // lblTransDetails1
+            // 
+            lblTransDetails1.AutoSize = true;
+            lblTransDetails1.Location = new Point(661, 54);
+            lblTransDetails1.Margin = new Padding(2, 0, 2, 0);
+            lblTransDetails1.Name = "lblTransDetails1";
+            lblTransDetails1.Size = new Size(83, 60);
+            lblTransDetails1.TabIndex = 17;
+            lblTransDetails1.Text = "ID: \r\nSubtotal: $\r\nTax Amount: $\r\nGrand Total: $";
+            // 
+            // lblTransDetails2
+            // 
+            lblTransDetails2.AutoSize = true;
+            lblTransDetails2.Location = new Point(661, 130);
+            lblTransDetails2.Margin = new Padding(2, 0, 2, 0);
+            lblTransDetails2.Name = "lblTransDetails2";
+            lblTransDetails2.Size = new Size(64, 15);
+            lblTransDetails2.TabIndex = 18;
+            lblTransDetails2.Text = "Line Items:";
+            // 
             // AdminDashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
-            ClientSize = new Size(691, 321);
+            ClientSize = new Size(879, 321);
+            Controls.Add(lblTransDetails2);
+            Controls.Add(lblTransDetails1);
+            Controls.Add(lblTransDetailsTitle);
+            Controls.Add(lblTransRecord);
+            Controls.Add(lbxTransactions);
             Controls.Add(btnRemoveFromInventory);
             Controls.Add(btnAddToInventory);
             Controls.Add(label4);
@@ -239,5 +303,10 @@
         private Label label4;
         private Button btnAddToInventory;
         private Button btnRemoveFromInventory;
+        private ListBox lbxTransactions;
+        private Label lblTransRecord;
+        private Label lblTransDetailsTitle;
+        private Label lblTransDetails1;
+        private Label lblTransDetails2;
     }
 }

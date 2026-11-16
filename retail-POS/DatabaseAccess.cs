@@ -182,10 +182,12 @@ namespace retail_POS {
                     command.CommandText = (" SELECT * FROM Products WHERE ID = " + id);
 
                     using (var reader = command.ExecuteReader()) {
-                        prod.ID = reader.GetInt32(0); /* ID */
-                        prod.Name = reader.GetString(1); /* Name */
-                        prod.Price = reader.GetDecimal(2); /* Price */
-                        prod.Quantity = reader.GetInt32(3); /* Quantity */
+                        while (reader.Read()) {
+                            prod.ID = reader.GetInt32(0); /* ID */
+                            prod.Name = reader.GetString(1); /* Name */
+                            prod.Price = reader.GetDecimal(2); /* Price */
+                            prod.Quantity = reader.GetInt32(3); /* Quantity */
+                        }
                     }
                 }
             }
@@ -298,10 +300,12 @@ namespace retail_POS {
                     command.CommandText = (" SELECT * FROM Transactions WHERE ID = " + id);
 
                     using (var reader = command.ExecuteReader()) {
-                        trans.ID = reader.GetInt32(0); /* ID */
-                        trans.SaleDate = reader.GetString(1); /* SaleDate */
-                        trans.TaxAmount = reader.GetDecimal(2); /* TaxAmount */
-                        trans.GrandTotal = reader.GetDecimal(3); /* GrandTotal */
+                        while (reader.Read()) {
+                            trans.ID = reader.GetInt32(0); /* ID */
+                            trans.SaleDate = reader.GetString(1); /* SaleDate */
+                            trans.TaxAmount = reader.GetDecimal(2); /* TaxAmount */
+                            trans.GrandTotal = reader.GetDecimal(3); /* GrandTotal */
+                        }
                     }
                 }
             }
@@ -362,9 +366,63 @@ namespace retail_POS {
             catch (Exception ex) {
                 MessageBox.Show("Failed to add transaction to database.\t" + ex.Message);
             }
-
-
         }
+        public List<TransactionLineItem> ListTransactionLineItems() {
+            List<TransactionLineItem> tliLog = new List<TransactionLineItem>();
+
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = @" SELECT * FROM TransactionLineItems";
+
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            tliLog.Add(new TransactionLineItem(reader.GetInt32(0), /* ID */
+                                                                reader.GetInt32(1), /* TransactionID */
+                                                                reader.GetInt32(2), /* ProductID */
+                                                                reader.GetInt32(3), /* Quantity */
+                                                                reader.GetDecimal(4) /* LineTotal */ ));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Failed to access transaction line items from database.\t" + ex.Message);
+            }
+
+            return tliLog;
+        }
+        public List<TransactionLineItem> ListTransactionLineItemsOfTransaction(int transid) {
+            List<TransactionLineItem> tliLog = new List<TransactionLineItem>();
+
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = " SELECT * FROM TransactionLineItems WHERE TransactionID = " + transid;
+
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            tliLog.Add(new TransactionLineItem(reader.GetInt32(0), /* ID */
+                                                                reader.GetInt32(1), /* TransactionID */
+                                                                reader.GetInt32(2), /* ProductID */
+                                                                reader.GetInt32(3), /* Quantity */
+                                                                reader.GetDecimal(4) /* LineTotal */ ));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Failed to access transaction line items from database.\t" + ex.Message);
+            }
+
+            return tliLog;
+        }
+
+
         public void ResetDB()
         {
             using (var connection = new SqliteConnection(connnectionString))

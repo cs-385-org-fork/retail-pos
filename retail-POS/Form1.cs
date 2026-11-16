@@ -157,6 +157,8 @@ namespace retail_POS {
                 foreach (TransactionLineItem newTransLineItem in transactionProducts) { //Convert the list of line items from transactionProducts into the database
                     dbAccess.AddTransactionLineItem(newTransLineItem.TransactionID, newTransLineItem.ProductID, newTransLineItem.Quantity);
                 }
+
+                MessageBox.Show("Transaction complete!");
             }
             else {
                 MessageBox.Show("There are no items in the list.");
