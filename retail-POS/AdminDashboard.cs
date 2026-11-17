@@ -105,18 +105,10 @@ namespace retail_POS
             selectedTransaction = (lbxTransactions.SelectedIndex + 1);
             Transaction trans = dbAccess.GetTransaction(selectedTransaction);
 
-            lblTransDetails1.Text = "ID: " + trans.ID + "\n"
+            lblTransDetails.Text = "ID: " + trans.ID + "\n"
                                     + "Subtotal: " + (trans.GrandTotal - trans.TaxAmount).ToString("C2") + "\n"
                                     + "Tax Amount: " + trans.TaxAmount.ToString("C2") + "\n" 
                                     + "Grand Total: " + trans.GrandTotal.ToString("C2");
-
-            //List <TransactionLineItem> lineItems = dbAccess.ListTransactionLineItemsOfTransaction(trans.ID);
-            List < TransactionLineItem > lineItems = dbAccess.ListTransactionLineItems();
-            lblTransDetails2.Text = "Line Items:" + "\n"
-                                    + "ID     Quantity     Total";
-            foreach (TransactionLineItem tli in lineItems) {
-                lblTransDetails2.Text = ("\n" + dbAccess.GetProduct(tli.ProductID) + "\t" + tli.Quantity + "\t" + tli.LineTotal.ToString("C2"));
-            }
         }
     }
 }

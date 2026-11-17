@@ -44,8 +44,7 @@
             lbxTransactions = new ListBox();
             lblTransRecord = new Label();
             lblTransDetailsTitle = new Label();
-            lblTransDetails1 = new Label();
-            lblTransDetails2 = new Label();
+            lblTransDetails = new Label();
             SuspendLayout();
             // 
             // tBxAddProduct
@@ -234,25 +233,15 @@
             lblTransDetailsTitle.TabIndex = 16;
             lblTransDetailsTitle.Text = "Transaction Details";
             // 
-            // lblTransDetails1
+            // lblTransDetails
             // 
-            lblTransDetails1.AutoSize = true;
-            lblTransDetails1.Location = new Point(661, 54);
-            lblTransDetails1.Margin = new Padding(2, 0, 2, 0);
-            lblTransDetails1.Name = "lblTransDetails1";
-            lblTransDetails1.Size = new Size(83, 60);
-            lblTransDetails1.TabIndex = 17;
-            lblTransDetails1.Text = "ID: \r\nSubtotal: $\r\nTax Amount: $\r\nGrand Total: $";
-            // 
-            // lblTransDetails2
-            // 
-            lblTransDetails2.AutoSize = true;
-            lblTransDetails2.Location = new Point(661, 130);
-            lblTransDetails2.Margin = new Padding(2, 0, 2, 0);
-            lblTransDetails2.Name = "lblTransDetails2";
-            lblTransDetails2.Size = new Size(64, 15);
-            lblTransDetails2.TabIndex = 18;
-            lblTransDetails2.Text = "Line Items:";
+            lblTransDetails.AutoSize = true;
+            lblTransDetails.Location = new Point(661, 54);
+            lblTransDetails.Margin = new Padding(2, 0, 2, 0);
+            lblTransDetails.Name = "lblTransDetails";
+            lblTransDetails.Size = new Size(83, 60);
+            lblTransDetails.TabIndex = 17;
+            lblTransDetails.Text = "ID: \r\nSubtotal: $\r\nTax Amount: $\r\nGrand Total: $";
             // 
             // AdminDashboard
             // 
@@ -260,8 +249,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(879, 321);
-            Controls.Add(lblTransDetails2);
-            Controls.Add(lblTransDetails1);
+            Controls.Add(lblTransDetails);
             Controls.Add(lblTransDetailsTitle);
             Controls.Add(lblTransRecord);
             Controls.Add(lbxTransactions);
@@ -306,7 +294,6 @@
         private ListBox lbxTransactions;
         private Label lblTransRecord;
         private Label lblTransDetailsTitle;
-        private Label lblTransDetails1;
-        private Label lblTransDetails2;
+        private Label lblTransDetails;
     }
 }

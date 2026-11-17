@@ -1,9 +1,11 @@
 using System.Reflection.PortableExecutable;
+using System.Security.Cryptography;
 
 namespace retail_POS {
     public partial class Form1 : Form {
         List<Product> availableProduct = new List<Product> { };
         List<Product> currentTransactionProducts = new List<Product> { };
+        List<TransactionLineItem> currentTLIs = new List<TransactionLineItem> { };
         List<Product> allProducts = new List<Product> { };
         DatabaseAccess dbAccess = new DatabaseAccess();
         int quantityRequested = 1;
@@ -86,6 +88,7 @@ namespace retail_POS {
                         int currentAmount = currentTransactionProducts.Count(item => item.ID == checkID);
                         if (quantityRequested + currentAmount <= item.Quantity) {
                             currentTransactionProducts.Add(item);
+                            currentTLIs.Add(new TransactionLineItem(item, new Transaction(), item.ID, quantityRequested));
                             lbxCheckoutItems.Items.Add(item);
                         }
                         else { MessageBox.Show("Item out of stock."); }
@@ -108,6 +111,7 @@ namespace retail_POS {
                 else if (quantityRequested + currentAmount <= selectedProduct.Quantity) {
                     for (int i = 0; i < quantityRequested; i++) {
                         currentTransactionProducts.Add(selectedProduct);
+                        currentTLIs.Add(new TransactionLineItem(selectedProduct, new Transaction(), selectedProduct.ID, quantityRequested));
                         lbxCheckoutItems.Items.Add(selectedProduct);
                     }
                 }
@@ -133,16 +137,23 @@ namespace retail_POS {
             if (lbxCheckoutItems.Items.Count != 0) {
                 List<TransactionLineItem> transactionProducts = new List<TransactionLineItem> { };
                 calculateTotal();
-                Transaction newTransaction = new Transaction(testID, DateTime.Now.ToString(), taxAmount, cost);
-                newTransaction.ID = 0; //Placeholder ID please check database for last ID and increment that by one
 
-                int itemQuantity = 1;
+                string timeString = DateTime.Now.ToString();
+                Transaction newTransaction = new Transaction(testID, timeString, taxAmount, cost);
+                dbAccess.AddTransaction(newTransaction); //Send the transaction to the database
+                newTransaction.ID = dbAccess.GetTransaction(timeString).ID; // get this transaction's ID
+
+                /*int itemQuantity = 1;
                 int Iid = 0;
+
                 foreach (Product product in currentTransactionProducts) {
+                    transactionProducts.Add( new TransactionLineItem(product, newTransaction, itemQuantity, Iid) );
+                    Iid++;
                     //Check the quantity of each item, remove them from the database, and send the quantity + item as a transactionItem
                     foreach (TransactionLineItem checkProduct in transactionProducts) {
                         if (checkProduct.ProductID != product.ID) {
-                            TransactionLineItem newItem = new TransactionLineItem(product, newTransaction, itemQuantity, Iid);
+                            //TransactionLineItem newItem = new TransactionLineItem(product, newTransaction, itemQuantity, Iid);
+                            transactionProducts.Add(new TransactionLineItem(product, newTransaction, itemQuantity, Iid));
                             Iid++;
                         }
                         else {
@@ -152,10 +163,16 @@ namespace retail_POS {
                     dbAccess.DecrementStock(product.ID, 1);
                 }
 
-                dbAccess.AddTransaction(newTransaction); //Send the transaction to the database
-
                 foreach (TransactionLineItem newTransLineItem in transactionProducts) { //Convert the list of line items from transactionProducts into the database
                     dbAccess.AddTransactionLineItem(newTransLineItem.TransactionID, newTransLineItem.ProductID, newTransLineItem.Quantity);
+                }*/
+
+                foreach (Product product in currentTransactionProducts) {
+                    dbAccess.DecrementStock(product.ID, 1);
+                }
+
+                foreach (TransactionLineItem newTransLineItem in currentTLIs) { //Convert the list of line items from transactionProducts into the database
+                    dbAccess.AddTransactionLineItem(newTransaction.ID, newTransLineItem.ProductID, newTransLineItem.Quantity);
                 }
 
                 MessageBox.Show("Transaction complete!");

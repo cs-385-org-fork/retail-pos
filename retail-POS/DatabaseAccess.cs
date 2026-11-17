@@ -27,7 +27,7 @@ namespace retail_POS {
                     command.ExecuteNonQuery();
 
                     command.CommandText = (" CREATE TABLE IF NOT EXISTS TransactionLineItems(ID INTEGER PRIMARY KEY AUTOINCREMENT, TransactionID INTEGER NOT NULL, ProductID INTEGER NOT NULL, Quantity INTEGER NOT NULL, LineTotal DOUBLE NOT NULL, "
-                                                                                               + "FOREIGN KEY (TransactionID) REFERENCES Products(ID), FOREIGN KEY (ProductID) REFERENCES Transactions(ID) )");
+                                                                                               + "FOREIGN KEY (TransactionID) REFERENCES Transactions(ID), FOREIGN KEY (ProductID) REFERENCES Products(ID) )");
                     command.ExecuteNonQuery();
                 }
             }
@@ -315,6 +315,32 @@ namespace retail_POS {
 
             return trans;
         }
+        public Transaction GetTransaction(string timeString) {
+            Transaction trans = new Transaction();
+
+            try {
+                using (var connection = new SqliteConnection(ConnectionString)) {
+                    connection.Open();
+
+                    var command = connection.CreateCommand();
+                    command.CommandText = (" SELECT * FROM Transactions WHERE SaleDate = '" + timeString + "'");
+
+                    using (var reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            trans.ID = reader.GetInt32(0); /* ID */
+                            trans.SaleDate = reader.GetString(1); /* SaleDate */
+                            trans.TaxAmount = reader.GetDecimal(2); /* TaxAmount */
+                            trans.GrandTotal = reader.GetDecimal(3); /* GrandTotal */
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Failed to access transaction from database.\t" + ex.Message);
+            }
+
+            return trans;
+        }
         public List<Transaction> ListTransactions() {
             List<Transaction> transLog = new List<Transaction>();
 
@@ -353,8 +379,8 @@ namespace retail_POS {
                     connection.Open();
 
                     var command = connection.CreateCommand();
-                    command.CommandText = (@" INSERT INTO TransactionLineItems(TransactionID, ProductID, Quantity, LineTotal) 
-                                                                VALUES(@transid, @prodid, @quantity, @linetotal); ");
+                    command.CommandText = (" INSERT INTO TransactionLineItems(TransactionID, ProductID, Quantity, LineTotal) "
+                                                                + "VALUES(@transid, @prodid, @quantity, @linetotal); ");
                     command.Parameters.AddWithValue("@transid", transid);
                     command.Parameters.AddWithValue("@prodid", prodid);
                     command.Parameters.AddWithValue("@quantity", quantity);
